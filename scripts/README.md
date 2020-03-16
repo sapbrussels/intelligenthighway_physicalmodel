@@ -1,45 +1,70 @@
+# Data model
+
+The physical model has two functions:
+- turning on/off the **adaptive lights**,
+- and change the status of the **indicative lights**.
+
+For making above two functions available, a data model was created in the SAP IoT platform (https://96e9f7bd-c38b-458d-8b98-630be0232fb8.eu10.cp.iot.sap/iot/cockpit/#/tenant/4). The model looks like this:
+
+- Device: IntelligentHighway (41e27b47-c413-463e-af97-f26658561008)
+  - Sensor Type: StreetLight (8c13dfc2-c75b-4b51-aa64-f2e2186ff280)
+    - Capability: AdaptiveLight - measure (8c13dfc2-c75b-4b51-aa64-f2e2186ff280)
+    - Capability: IndicativeLight - command (df945cb3-70dd-4462-a4a8-45364a5d5cc6)
+
+The IntelligentHighway has three (3) street light sensors:
+
+- StreetLight1 (1e2a24d4-8e3a-4ee7-bbdf-d50d56657ac1)
+- StreetLight2 (07a00235-09e5-4d2b-9d91-0ecfde9c62c3)
+- StreetLight3 (7474a34a-a525-43ce-b01c-5f4f22f72107)
+
+A street light can do two things:
+- it turns on the light automatically when an object approaches (adaptive light).
+- it turns on a secondary light when a specific event is occurring (indicative light).
+
 # Generate data
 
-You can generate data by executing the generata_data.py script.
+You can generate data by executing the generata_data.js script. This will generate data for the AdaptiveLight, for each of the streetlights.
 
-## Install mqtt-cli
+## Run the script
+
+First install the dependencies (make sure you have nodejs and npm installed - https://nodejs.org/en/).
+
+    npm i
+
+Run the script
+
+    node generate_data.js
+
+After you execute you will see data is being send to the IoT platform. Check the sensor data graph on the dashboard.
+
+# Send commands to IndicativeLight
+
+You can send a MQTT message (command) to your sensor by using the  `trigger_commmand.js` script. This will send random statuses.
+
+## (optional) Install mqtt-cli
 
     brew tap hivemq/mqtt-cli
     brew cask install adoptopenjdk #optional
     brew install mqtt-cli
 
-### Test
+### (optional) Test
 
 Execute following command. Make sure to select MQTT 3 instead of 5.
 
-    mqtt pub -h 96e9f7bd-c38b-458d-8b98-630be0232fb8.eu10.cp.iot.sap --topic "measures/27f64f84-9657-4ba0-bda0-cee72fca0212" --message lol --cert ./scripts/mqtt.cer --key ./scripts/mqtt.pem -v -p 8883 --mqttVersion 3 -i  27f64f84-9657-4ba0-bda0-cee72fca0212
-
-Would output following:
-
-    Identifier '88a2b0c3-b2b9-435d-b1ad-df59e1691ebb' may be too long (identifier length '36' exceeds 23)
-    Identifier '88a2b0c3-b2b9-435d-b1ad-df59e1691ebb' may contain invalid characters ('-')
-    Command PublishCommand{host=96e9f7bd-c38b-458d-8b98-630be0232fb8.eu10.cp.iot.sap, port=8883, version=MQTT_3_1_1, identifier=88a2b0c3-b2b9-435d-b1ad-df59e1691ebb, useDefaultSsl=false, sslConfig=com.hivemq.client.internal.mqtt.MqttClientSslConfigImpl@bf531149, useWebSocket=false, topics=[lol], qos=[AT_MOST_ONCE], message=lol}
-    Client '88a2b0c3-b2b9-435d-b1ad-df59e1691ebb@96e9f7bd-c38b-458d-8b98-630be0232fb8.eu10.cp.iot.sap' sending CONNECT MqttConnect{keepAlive=60, cleanSession=true}
-    Client '88a2b0c3-b2b9-435d-b1ad-df59e1691ebb@96e9f7bd-c38b-458d-8b98-630be0232fb8.eu10.cp.iot.sap' received CONNACK MqttConnAck{returnCode=SUCCESS, sessionPresent=false}
-    Client '88a2b0c3-b2b9-435d-b1ad-df59e1691ebb@96e9f7bd-c38b-458d-8b98-630be0232fb8.eu10.cp.iot.sap' sending PUBLISH ('lol') MqttPublish{topic=lol, payload=3byte, qos=AT_MOST_ONCE, retain=false}
-    Client '88a2b0c3-b2b9-435d-b1ad-df59e1691ebb@96e9f7bd-c38b-458d-8b98-630be0232fb8.eu10.cp.iot.sap' received PUBLISH acknowledgement MqttPublish{topic=lol, payload=3byte, qos=AT_MOST_ONCE, retain=false}
-
+    mqtt pub -h 96e9f7bd-c38b-458d-8b98-630be0232fb8.eu10.cp.iot.sap --topic "measures/..." --message ... --cert ./scripts/mqtt.cer --key ./scripts/mqtt.pem -v -p 8883 --mqttVersion 3 -i ..
 
 ### Subscribe
 
 Listen to commands.
 
-    mqtt sub -h 96e9f7bd-c38b-458d-8b98-630be0232fb8.eu10.cp.iot.sap --topic "commands/27f64f84-9657-4ba0-bda0-cee72fca0212/#" --cert ./scripts/mqtt.cer --key ./scripts/mqtt.pem -v -p 8883 --mqttVersion 3 -i 27f64f84-9657-4ba0-bda0-cee72fca0212
+    mqtt sub -h 96e9f7bd-c38b-458d-8b98-630be0232fb8.eu10.cp.iot.sap --topic "commands/.../#" --cert ./scripts/mqtt.cer --key ./scripts/mqtt.pem -v -p 8883 --mqttVersion 3 -i ...
 
 Listen to ack.
 
-    mqtt sub -h 96e9f7bd-c38b-458d-8b98-630be0232fb8.eu10.cp.iot.sap --topic "ack/27f64f84-9657-4ba0-bda0-cee72fca0212/#" --cert ./scripts/mqtt.cer --key ./scripts/mqtt.pem -v -p 8883 --mqttVersion 3 -i 27f64f84-9657-4ba0-bda0-cee72fca0212
+    mqtt sub -h 96e9f7bd-c38b-458d-8b98-630be0232fb8.eu10.cp.iot.sap --topic "ack/.../#" --cert ./scripts/mqtt.cer --key ./scripts/mqtt.pem -v -p 8883 --mqttVersion 3 -i ...
 
-Listen to measures (does not work).
 
-    mqtt sub -h 96e9f7bd-c38b-458d-8b98-630be0232fb8.eu10.cp.iot.sap --topic "measures/27f64f84-9657-4ba0-bda0-cee72fca0212/#" --cert ./scripts/mqtt.cer --key ./scripts/mqtt.pem -v -p 8883 --mqttVersion 3 -i 27f64f84-9657-4ba0-bda0-cee72fca0212
-
-## MQTT - Get Certificate
+## (Optional) MQTT - Get Decrypted Certificate
 
 Download the certificate for your device from the IoT platform. This will give you a .pem certificate (`adaptive_light-device_certificate.pem`) and a secret key (`secret.txt`).
 
@@ -55,8 +80,6 @@ Copy the `-----BEGIN CERTIFICATE-----` section at the bottom of the `adaptive_li
 
 Now you have all the files to make a connection to the MQTT broker of SAP IoT.
 
-## Run
+## (Useful( Trigger commands
 
-Install dependencies
-
-    pip install paho-mqtt
+Interesting read: https://help.sap.com/doc/459df7cc2db04351b9b27808875d6a6d/Cloud/en-US/iot.cf.send.commands.mqtt.pdf

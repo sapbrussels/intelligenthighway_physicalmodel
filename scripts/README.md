@@ -3,6 +3,7 @@
 The physical model has two functions:
 - turning on/off the **adaptive lights**,
 - and change the status of the **indicative lights**.
+- decreasing **light life time**, as soon a the physical model is on.
 
 For making above two functions available, a data model was created in the SAP IoT platform (https://96e9f7bd-c38b-458d-8b98-630be0232fb8.eu10.cp.iot.sap/iot/cockpit/#/tenant/4). The model looks like this:
 
@@ -21,10 +22,11 @@ The IntelligentHighway has three (3) street light sensors:
 A street light can do two things:
 - it turns on the light automatically when an object approaches (adaptive light).
 - it turns on a secondary light when a specific event is occurring (indicative light).
+- when the physical model is turned on for 2minutes e.g. the light life time is below 50%, and will generate an alert in the SAP IoT Business Service.
 
 # Generate data
 
-You can generate data by executing the generata_data.js script. This will generate data for the AdaptiveLight, for each of the streetlights.
+You can generate data by executing the generata_data.js script. This will generate data for the AdaptiveLight, for each of the streetlights. It will also decrease the Light Life Time property over time, it starts at 100 and is decreased by 1 with every POST.
 
 ## Run the script
 

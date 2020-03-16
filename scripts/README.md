@@ -41,6 +41,8 @@ After you execute you will see data is being send to the IoT platform. Check the
 
 You can send a MQTT message (command) to your sensor by using the  `trigger_commmand.js` script. This will send random statuses.
 
+    node trigger_commmand.js
+
 ## (optional) Install mqtt-cli
 
     brew tap hivemq/mqtt-cli

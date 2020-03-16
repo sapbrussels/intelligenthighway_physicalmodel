@@ -12,7 +12,7 @@ You can generate data by executing the generata_data.py script.
 
 Execute following command. Make sure to select MQTT 3 instead of 5.
 
-  mqtt pub -h 96e9f7bd-c38b-458d-8b98-630be0232fb8.eu10.cp.iot.sap --topic "measures/88a2b0c3-b2b9-435d-b1ad-df59e1691ebb" --message lol --cert ./scripts/mqtt.cer --key ./scripts/mqtt.pem -v -p 8883 --mqttVersion 3 -i 88a2b0c3-b2b9-435d-b1ad-df59e1691ebb
+  mqtt pub -h 96e9f7bd-c38b-458d-8b98-630be0232fb8.eu10.cp.iot.sap --topic "measures/27f64f84-9657-4ba0-bda0-cee72fca0212" --message lol --cert ./scripts/mqtt.cer --key ./scripts/mqtt.pem -v -p 8883 --mqttVersion 3 -i  27f64f84-9657-4ba0-bda0-cee72fca0212
 
 Would output following:
 
@@ -24,6 +24,20 @@ Would output following:
   Client '88a2b0c3-b2b9-435d-b1ad-df59e1691ebb@96e9f7bd-c38b-458d-8b98-630be0232fb8.eu10.cp.iot.sap' sending PUBLISH ('lol') MqttPublish{topic=lol, payload=3byte, qos=AT_MOST_ONCE, retain=false}
   Client '88a2b0c3-b2b9-435d-b1ad-df59e1691ebb@96e9f7bd-c38b-458d-8b98-630be0232fb8.eu10.cp.iot.sap' received PUBLISH acknowledgement MqttPublish{topic=lol, payload=3byte, qos=AT_MOST_ONCE, retain=false}
 
+
+### Subscribe
+
+Listen to commands.
+
+    mqtt sub -h 96e9f7bd-c38b-458d-8b98-630be0232fb8.eu10.cp.iot.sap --topic "commands/27f64f84-9657-4ba0-bda0-cee72fca0212/#" --cert ./scripts/mqtt.cer --key ./scripts/mqtt.pem -v -p 8883 --mqttVersion 3 -i 27f64f84-9657-4ba0-bda0-cee72fca0212
+
+Listen to ack.
+
+    mqtt sub -h 96e9f7bd-c38b-458d-8b98-630be0232fb8.eu10.cp.iot.sap --topic "ack/27f64f84-9657-4ba0-bda0-cee72fca0212/#" --cert ./scripts/mqtt.cer --key ./scripts/mqtt.pem -v -p 8883 --mqttVersion 3 -i 27f64f84-9657-4ba0-bda0-cee72fca0212
+
+Listen to measures (does not work).
+
+    mqtt sub -h 96e9f7bd-c38b-458d-8b98-630be0232fb8.eu10.cp.iot.sap --topic "measures/27f64f84-9657-4ba0-bda0-cee72fca0212/#" --cert ./scripts/mqtt.cer --key ./scripts/mqtt.pem -v -p 8883 --mqttVersion 3 -i 27f64f84-9657-4ba0-bda0-cee72fca0212
 
 ## MQTT - Get Certificate
 

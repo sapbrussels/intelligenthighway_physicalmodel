@@ -36,19 +36,19 @@ def on_connect(device_id):
     return on_connect_device
 
 
-adaptive_streetlight = create_client('27f64f84-9657-4ba0-bda0-cee72fca0212b', 'adaptive_streetlight')
+adaptive_streetlight = create_client('27f64f84-9657-4ba0-bda0-cee72fca0212', 'adaptive_streetlight')
 
 
 def send_data():
 
     measuresBHC ={
-        'Temperature': "test",
+        'IR': "true",
     }
 
     data = json.dumps({
-        "capabilityAlternateId": "c57232747cca011b",
+        "capabilityAlternateId": "125923c8-f797-4997-98cf-4434fc9d7c79",
         "measures": measuresBHC,
-        "sensorAlternateId": "fc907bfabbf99bfc"
+        "sensorAlternateId": "26ddca77-0936-4c73-bc63-125d19d3223d"
     })
 
     print('Sending data to adaptive_streetlight')

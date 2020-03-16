@@ -10,6 +10,7 @@ For making above two functions available, a data model was created in the SAP Io
   - Sensor Type: StreetLight (8c13dfc2-c75b-4b51-aa64-f2e2186ff280)
     - Capability: AdaptiveLight - measure (8c13dfc2-c75b-4b51-aa64-f2e2186ff280)
     - Capability: IndicativeLight - command (df945cb3-70dd-4462-a4a8-45364a5d5cc6)
+    - Capability: LightLifeTime - measure (36b597a9-5c3e-45e5-985e-9453ea9c2ba0)
 
 The IntelligentHighway has three (3) street light sensors:
 

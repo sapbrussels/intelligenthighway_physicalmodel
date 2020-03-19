@@ -5,7 +5,7 @@ The physical model has two functions:
 - and change the status of the **indicative lights**.
 - decreasing **light life time**, as soon a the physical model is on.
 
-For making above two functions available, a data model was created in the SAP IoT platform (https://96e9f7bd-c38b-458d-8b98-630be0232fb8.eu10.cp.iot.sap/iot/cockpit/#/tenant/4). The model looks like this:
+For making above three functions available, a data model was created in the SAP IoT platform (https://96e9f7bd-c38b-458d-8b98-630be0232fb8.eu10.cp.iot.sap/iot/cockpit/#/tenant/4). The model looks like this:
 
 - Device: IntelligentHighway (41e27b47-c413-463e-af97-f26658561008)
   - Sensor Type: StreetLight (8c13dfc2-c75b-4b51-aa64-f2e2186ff280)

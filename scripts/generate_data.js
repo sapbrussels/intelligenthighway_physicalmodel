@@ -25,6 +25,10 @@ setInterval(() => {
     sendDataViaMQTT(SENSOR3_ALTERNATE_ID, status, thelifetime);
 
     thelifetime = thelifetime - 1
+
+    if (thelifetime < 0) {
+      thelifetime = 100
+    }
 }, 1000);
 
 function sendDataViaMQTT(sensor, status, ledlifetime) {
@@ -63,6 +67,12 @@ function sendDataViaMQTT(sensor, status, ledlifetime) {
     });
 }
 
+
+// -> TODO ARDUINO
+// POST https://...hana.ondemand.com/IntelligentHighway/streetlight1/adaptivelight -> off
+// POST  https://...hana.ondemand.com/IntelligentHighway/streetlight1/adaptivelight -> on
+// POST https://...hana.ondemand.com/IntelligentHighway/streetlight1/lifetime -> 99
+
 function connectToMQTT() {
     var options = {
         keepalive: 10,
@@ -76,8 +86,8 @@ function connectToMQTT() {
         rejectUnauthorized: false
     };
 
+    // Arduino => listen for actions.
     var mqttClient = mqtt.connect(`mqtts://${HOST_ADDRESS}:8883`, options);
-
     mqttClient.subscribe('commands/' + DEVICE_ALTERNATE_ID);
     mqttClient.on('connect', () => console.log("Connection established!"));
     mqttClient.on("error", err => console.log("Unexpected error occurred:", err));

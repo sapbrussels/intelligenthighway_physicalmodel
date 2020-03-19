@@ -1,4 +1,4 @@
-# Adaptive Street Light Physical Model
+# Intelligent Highway Physical Model
 
 The adaptive street light physical model is ...
 
